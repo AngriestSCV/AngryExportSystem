@@ -1,0 +1,5 @@
+<angry_export_config version="1">
+    <unity_directory>u-modern-retreat</unity_directory>
+    <base_export>Assets/AutoMeshes</base_export>
+    <prop_export>Assets/Props</prop_export>
+</angry_export_config>
