@@ -7,9 +7,8 @@ from . import export_prop
 
 def export_options(self, context):
     cfg = config_loader.get_default(context.scene)
-
-    return [ ("base", "base", "Base Export"), 
-            ("prop", "prop", "Prop Export"), ]
+    for target in  cfg.export_targets:
+        yield (target.name, target.name, target.name)
 
 class OBJECT_OT_Angry_Exporter(bpy.types.Operator):
     bl_idname = "object.angry_exporter"
@@ -67,7 +66,7 @@ class OBJECT_OT_Angry_Exporter(bpy.types.Operator):
         fname = self.export_regex.match(col.name).groups(1)[0]
 
         cfg_path = context.scene.AngryExportSystem_ConfigPath
-        cfg_path = os.path.abspath(cfg_path)
+        cfg_path = bpy.path.abspath(cfg_path)
         cfg = config_loader.Config(cfg_path)
 
         output_dir = cfg.get_export(self.export_type)

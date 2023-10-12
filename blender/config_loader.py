@@ -18,7 +18,6 @@ def get_default(scene):
     cfg_path =  scene.AngryExportSystem_ConfigPath
     cfg_path = bpy.path.abspath(cfg_path)
     cfg_path = os.path.abspath(cfg_path)
-
     return Config(cfg_path)
 
 class ExportTarget(object):
