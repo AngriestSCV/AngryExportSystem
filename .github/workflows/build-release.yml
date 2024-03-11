@@ -16,7 +16,6 @@ jobs:
       # Create a filtered zip of the repository.
       - name: Zip Repository (excludes .git*)
         run: |
-          ls
           cd ${{ github.event.repository.name }}
           mv blender ${{ github.event.repository.name }}
           zip -r ${{ github.event.repository.name }}.zip \
@@ -28,6 +27,6 @@ jobs:
         run: |
           cd ${{ github.event.repository.name }}
           gh release create ${{github.ref_name}} --generate-notes \
-            ../${{ github.event.repository.name }}.zip          
+            ${{ github.event.repository.name }}.zip          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
