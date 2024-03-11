@@ -10,7 +10,7 @@ def export_options(self, context):
     for target in  cfg.export_targets:
         yield (target.name, target.name, target.name)
 
-class OBJECT_OT_Angry_Exporter(bpy.types.Operator):
+class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
     bl_idname = "object.angry_exporter"
     bl_label = "Angry Export Base Object"
     export_regex = re.compile(r"export:\s*(.*)")

@@ -26,12 +26,12 @@ class VIEW3D_PT_angry_export_panel(bpy.types.Panel):
                 
         #export options
         col = layout.column()
-        if exporter.OBJECT_OT_Angry_Exporter.poll(context):
+        if exporter.COLLECTION_OT_Angry_Exporter.poll(context):
 
             cfg = config_loader.get_default(context.scene)
 
             for target in cfg.export_targets:
-                export_name = exporter.OBJECT_OT_Angry_Exporter.get_export_name(context)
+                export_name = exporter.COLLECTION_OT_Angry_Exporter.get_export_name(context)
                 arg = col.operator("object.angry_exporter", text=f"Export: {target.name}")
                 arg.export_type = target.name
 
