@@ -11,7 +11,7 @@ def export_options(self, context):
         yield (target.name, target.name, target.name)
 
 class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
-    bl_idname = "object.angry_exporter"
+    bl_idname = "collection.angry_exporter"
     bl_label = "Angry Export Base Object"
     export_regex = re.compile(r"export:\s*(.*)")
 

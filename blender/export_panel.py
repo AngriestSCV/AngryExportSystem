@@ -32,7 +32,7 @@ class VIEW3D_PT_angry_export_panel(bpy.types.Panel):
 
             for target in cfg.export_targets:
                 export_name = exporter.COLLECTION_OT_Angry_Exporter.get_export_name(context)
-                arg = col.operator("object.angry_exporter", text=f"Export: {target.name}")
+                arg = col.operator("collection.angry_exporter", text=f"Export: {target.name}")
                 arg.export_type = target.name
 
         else:
