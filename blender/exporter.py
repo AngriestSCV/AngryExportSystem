@@ -59,8 +59,8 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
             obj["AngryExportSystem_Xml"] = as_string
             print(f"Setting xml to: [{as_string}]")
 
-    def _get_selected(self, context: bpy.types.Context):
-        selected = [ o for o in context.selectable_objects ]
+    def _get_selected(self, context: bpy.types.Context) -> list[bpy.types.Object]:
+        selected = [ o for o in context.selected_objects ]
         return selected
 
         
@@ -71,7 +71,7 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
             col = context.collection
             if col is None: 
                 return {"CANCELLED"}
-            
+
             fname = self.export_regex.match(col.name).groups(1)[0]
 
             cfg_path = context.scene.AngryExportSystem_ConfigPath
@@ -86,10 +86,8 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
             
             os.makedirs(output_dir, exist_ok=True)
 
-            for obj in bpy.data.objects:
-                if col.name in obj.users_collection:
-                    print(obj.users_collection)
-                    obj.select_set(True)
+            for obj in col.objects:
+                obj.select_set(True)
 
             to_save = self._get_selected(context)
             print(f"Found {len(to_save)} items to work with")
