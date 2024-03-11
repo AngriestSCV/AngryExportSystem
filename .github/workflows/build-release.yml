@@ -9,7 +9,7 @@ jobs:
       # Checkout the repository under a subdirectory (repository-name/) to
       # make zipping easier. Note: 'gh' or 'git' commands must be executed
       # *after* changing into the repository's directory.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: ${{ github.event.repository.name }}
 
