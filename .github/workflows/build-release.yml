@@ -16,7 +16,8 @@ jobs:
       # Create a filtered zip of the repository.
       - name: Zip Repository (excludes .git*)
         run: |
-          cd blender
+          ls
+          cd AngryExportSystem/blender
           zip -r ${{ github.event.repository.name }}.zip \
             ${{ github.event.repository.name }} \
             -x "${{ github.event.repository.name }}/.git*"          
