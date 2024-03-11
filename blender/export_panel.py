@@ -24,12 +24,6 @@ class VIEW3D_PT_angry_export_panel(bpy.types.Panel):
             else:
                 to_show = {}
                 
-            for x in export_prop.all_properties:
-                try:
-                    show_section(x.id)
-                except Exception as e:
-                    print("Exception:", e)
-
         #export options
         col = layout.column()
         if exporter.OBJECT_OT_Angry_Exporter.poll(context):
