@@ -1,0 +1,3 @@
+- name: Blender Addon Build
+  uses: BlenderKit/blender-addon-build@v0.1
+

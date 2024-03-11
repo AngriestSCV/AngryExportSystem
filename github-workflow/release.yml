@@ -1,2 +1,36 @@
-- name: Blender Addon Build
-  uses: BlenderKit/blender-addon-build@v0.1
+name: Release
+
+on:
+  pull_request:
+    branches: [ '**' ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version'
+        required: true
+        default: '0.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:        
+      - name: Build addon
+        uses: blenderkit/blender-addon-build@main
+        with:
+          name: sample-addon
+          exclude-files: ".git;.github;github-workflow;README.md"
+
+  Release:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Release addon
+        uses: blenderkit/blender-addon-release@main
+        with:
+          artifact_name: AngryExportSystem
+          release_name: AngryExportSystem
+          version: ${{github.event.inputs.version}}
+
