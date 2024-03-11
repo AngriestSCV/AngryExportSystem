@@ -81,8 +81,6 @@ class OBJECT_OT_AddExportProperty(bpy.types.Operator):
             
         return {'FINISHED'}
 
-   
-
 addon_types = [
     export_panel.VIEW3D_PT_angry_export_panel,
     OBJECT_OT_AddExportProperty,
