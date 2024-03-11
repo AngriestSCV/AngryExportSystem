@@ -3,9 +3,11 @@
 	"displayName": "Angry Export System",
 	"version": 0.0.0,
 	"description": "A blender to unity integration for creating worlds",
-	"unity": "2019.4",
+	"//url": "fix the below at some point",
+	"url": "invalid-url@github.com",
 	"author": {
-		"name": "angrylabs"
+		"name": "angrylabs",
+		"email": "angriestscv@proton.me"
 	},
 	"hideInEditor": false
 }
