@@ -127,6 +127,16 @@ class LightmapScale(ExportProp):
         default = 1.0,
         override = {"LIBRARY_OVERRIDABLE"}
     )
+
+class Export(ExportProp):
+    id = "AngryExportSystem_Export_Object"
+    name = "Export"
+    description = "Export this item and it's children"
+    blender_property = bpy.props.BoolProperty(
+        name = "Export object",
+        default = False,
+    )
+
     
 all_properties = [
     PrefabLink(),
@@ -134,4 +144,5 @@ all_properties = [
     Collider(),
     StaticFlags(),
     LightmapScale(),
+    Export(),
 ]

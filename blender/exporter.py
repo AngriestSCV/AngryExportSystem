@@ -36,29 +36,6 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
         
         return match.groups(1)[0]
             
-    def update_properties(self, cfg, obj_list):
-        for obj in obj_list:
-            if 'AngryExport_Show' in obj:
-                to_show = obj['AngryExport_Show']
-            else:
-                continue
-
-            root_xml = XmlEt.Element("Components")
-            name_xml = XmlEt.SubElement(root_xml, "blender_name", attrib={"value": obj.name})
-
-            for prop in export_prop.all_properties:
-                id = prop.id
-
-                if to_show.get(id, False):
-                    prop.add_to_export_xml(cfg, obj, root_xml)
-                elif id in obj:
-                    print(f"Purgin [{id}] on [{obj.name}]")
-                    del obj[id]
-
-            as_string =  XmlEt.tostring(root_xml, encoding="utf-8").decode('utf-8')
-            obj["AngryExportSystem_Xml"] = as_string
-            print(f"Setting xml to: [{as_string}]")
-
     def _get_selected(self, context: bpy.types.Context) -> list[bpy.types.Object]:
         selected = [ o for o in context.selected_objects ]
         return selected
@@ -82,15 +59,13 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
             save_path = os.path.join(output_dir, f"{fname}.fbx")
             xml_path = os.path.join(output_dir, f"{fname}.fbx.xml")
             
-            #self.update_properties(cfg, col.objects)
-            
             os.makedirs(output_dir, exist_ok=True)
 
             for obj in col.objects:
                 obj.select_set(True)
 
             to_save = self._get_selected(context)
-            print(f"Found {len(to_save)} items to work with")
+            #print(f"Found {len(to_save)} items to work with")
             self._create_xml(xml_path, cfg, to_save)
 
             print("Saving FBX at", save_path)
