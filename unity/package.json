@@ -1,14 +1,21 @@
 {
+	"id": "net.angrylabs.angryexportsystem",
 	"name": "net.angrylabs.angryexportsystem",
-	"displayName": "Angry Export System",
-	"version": 0.0.0,
-	"description": "A blender to unity integration for creating worlds",
-	"//url": "fix the below at some point",
-	"url": "invalid-url@github.com",
-	"author": {
-		"name": "angrylabs",
-		"email": "angriestscv@proton.me"
-	},
-	"hideInEditor": false
-}
+	"url": "https://github.com/fasdfaf.zip",
 
+	"packages": {
+		"versions":{
+			"name": "net.angrylabs.angryexportsystem",
+			"displayName": "Angry Export System",
+			"version": "0.0.0",
+			"description": "blender and unity world building integration",
+			"author":{
+				"name": "angrylabs",
+				"email": "angriestscv@proton.me"
+			},
+			"hideInEditor": false,
+			"url": "https://github.com/fasdfaf.zip",
+			"license": "GPL-3.0-or-later"
+		}
+	}
+}
