@@ -22,7 +22,7 @@ from . import exporter
 
 bl_info = {
     "name": "Angry Export System",
-    "blender": (3,5,1),
+    "blender": (4,0,2),
     "category": "Object",
     "description": "Export System for Unity world development",
     "warning": "",
