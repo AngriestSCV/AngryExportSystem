@@ -9,19 +9,56 @@ class VIEW3D_PT_angry_export_panel(bpy.types.Panel):
     bl_region_type = "UI"
     bl_category = "AES"
     bl_label = "Angry Export System"
-    
-    def draw(self, context):
-        layout = self.layout
-        obj = bpy.context.active_object
 
+    def _draw_collection(self, context):
+        layout = self.layout.box()
+        col = bpy.context.collection
+
+        if col is None:
+            layout.label(text="- No active collection -")
+        else:
+            layout.label(text=f"Collection: {col.name}")
+            
+            if 'AngryExport_Show' in col:
+                to_show = obj['AngryExport_Show']
+            else:
+                to_show = {}
+                
+            for x in export_prop.all_properties:
+                try:
+                    show_section(x.id)
+                except Exception as e:
+                    print("Exception:", e)
+
+        #export options
+        col = layout.column()
+        if exporter.OBJECT_OT_Angry_Exporter.poll(context):
+
+            cfg = config_loader.get_default(context.scene)
+
+            for target in cfg.export_targets:
+                export_name = exporter.OBJECT_OT_Angry_Exporter.get_export_name(context)
+                arg = col.operator("object.angry_exporter", text=f"Export: {target.name}")
+                arg.export_type = target.name
+
+        else:
+            col.label(text="Invalid name for export collection")
+        return True
+
+    def _draw_config(self, context):
+        layout = self.layout 
         layout.prop(context.scene, "AngryExportSystem_ConfigPath")
-        
         cfg_path = context.scene.AngryExportSystem_ConfigPath
         cfg_path = bpy.path.abspath(cfg_path)
 
         if not os.path.exists(cfg_path):
             layout.operator("scene.angry_export_create_config", text="Create missing config")
-            return
+            return False
+        return True
+
+    def _draw_object(self, context):
+        layout = self.layout.box()
+        obj = bpy.context.active_object
 
         if obj is None:
             layout.label(text="- No active object -")
@@ -57,17 +94,18 @@ class VIEW3D_PT_angry_export_panel(bpy.types.Panel):
             props = layout.operator_menu_enum("object.angry_export_add_property", "prop_name")
             props.adding = True
 
-        #export options
-        col = layout.column()
-        if exporter.OBJECT_OT_Angry_Exporter.poll(context):
+        return True
 
-            cfg = config_loader.get_default(context.scene)
 
-            for target in cfg.export_targets:
-                export_name = exporter.OBJECT_OT_Angry_Exporter.get_export_name(context)
-                arg = col.operator("object.angry_exporter", text=f"Export: {target.name}")
-                arg.export_type = target.name
+    def draw(self, context):
+        layout = self.layout
 
-        else:
-            col.label(text="Invalid name for export collection")
+        if not self._draw_config(context):
+            return
 
+        if not self._draw_collection(context):
+            return
+
+        if not self._draw_object(context):
+            return
+        
