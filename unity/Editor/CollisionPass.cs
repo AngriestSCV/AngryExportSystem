@@ -6,7 +6,7 @@ namespace AngryLabs.AngryExportSystem
 {
     class CollisionPass : IFbxImportPass
     {
-        public bool ImportPass(ProcessFbxImport importer, GameObject go, AngryExportSystemXml options)
+        public bool ImportPass(ProcessFbxImport importer, GameObject go, ExportObject options)
         {
             var colType = options?.Collider;
             if (colType == null) return true;

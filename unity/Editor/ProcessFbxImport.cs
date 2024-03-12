@@ -1,10 +1,12 @@
 ﻿#if UNITY_EDITOR
 
+using Assets.AngryLabs.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 using UnityEditor;
@@ -15,57 +17,55 @@ namespace AngryLabs.AngryExportSystem
 {
     public class ProcessFbxImport : AssetPostprocessor
     {
-        private readonly Dictionary<string, AngryExportSystemXml> _userPropertyMap = new Dictionary<string, AngryExportSystemXml>();
-
-        static XmlSerializer _exportSeralizer = new XmlSerializer(typeof(AngryExportSystemXml));
+        static XmlSerializer _exportSeralizer = new XmlSerializer(typeof(AngryExportSystemList));
+        private AngryExportSystemList _importConfig;
 
         private void OnPostprocessGameObjectWithUserProperties(GameObject go, string[] propNames, object[] values)
         {
-            AngryExportSystemXml options = null;
-            for (int i = 0; i < propNames.Length; i++)
-            {
-                if (propNames[i] == "AngryExportSystem_Xml")
-                {
-                    try
-                    {
-                        var ms = new MemoryStream();
-                        var xml_string = values[i] as string;
-                        var asBytes = Encoding.UTF8.GetBytes(xml_string);
-                        ms.Write(asBytes, 0, asBytes.Length);
-                        ms.Position = 0;
-                        options = _exportSeralizer.Deserialize(ms) as AngryExportSystemXml;
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogError($"Error deseralizing AngryExportSystemXml on [{go.name}] [{ex}]");
-                        options = null;
-                    }
-                }
-            }
-
-            if (options != null)
-            {
-                _userPropertyMap.Add(go.name, options);
-            }
         }
 
-        public bool SkipAsset(string path)
+        private bool TryLoadXml(string assetPath, out AngryExportSystemList cfg)
         {
-            path = path.Replace("\\", "/");
-            bool process =  path.ToLower().Contains("assets/automeshes") || path.ToLower().Contains("assets/props");
-            return !process;
+            try
+            {
+                if (!File.Exists(assetPath))
+                {
+                    cfg = null;
+                    return false;
+                }
+
+                using (var xmlFile = File.OpenRead(assetPath))
+                {
+                    cfg = _exportSeralizer.Deserialize(xmlFile) as AngryExportSystemList;
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.LogError($"Exception while trying to load XML file: {assetPath}");
+                Debug.LogException(ex);
+
+                cfg = null;
+                return false;
+            }
         }
+
 
         public void OnPreprocessModel()
         {
-            if (SkipAsset(assetPath)) return;
+            if (!TryLoadXml(assetImporter.assetPath + ".xml", out var cfg))
+                return;
+
+            _importConfig = cfg;
+
+
             ModelImporter modelImporter = assetImporter as ModelImporter;
             if (modelImporter == null) return;
 
             modelImporter.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;
 
             modelImporter.isReadable = true;
-            modelImporter.generateSecondaryUV = !assetPath.Contains(".uved");
+            modelImporter.generateSecondaryUV = _importConfig?.GenerateLightmap?.Value ?? false;
             modelImporter.preserveHierarchy = true;
         }
 
@@ -80,8 +80,8 @@ namespace AngryLabs.AngryExportSystem
 
             foreach(var pass in passes)
             { 
-                AngryExportSystemXml options;
-                _userPropertyMap.TryGetValue(target.name, out options);
+                ExportObject options;
+                _importConfig.Lookup.TryGetValue(target.name, out options);
 
                 if(!pass.ImportPass(this, target, options))
                 {
@@ -98,10 +98,10 @@ namespace AngryLabs.AngryExportSystem
 
         private void OnPostprocessModel(GameObject model)
         {
+            if (_importConfig == null)
+                return;
 
-            if (SkipAsset(assetPath)) return;
-
-            HandleStaticFlags(model, default(StaticEditorFlags));
+            HandleStaticFlags(model, default);
             var passes = new IFbxImportPass[]
             {
                 new PrefabReplacementPass(),
@@ -109,6 +109,7 @@ namespace AngryLabs.AngryExportSystem
                 new CollisionPass(),
                 new RenderPass(),
                 new ChangeMaterialPass(this),
+                new ExportPass(),
             };
 
             RecursiveVisit(model, passes);
@@ -116,10 +117,10 @@ namespace AngryLabs.AngryExportSystem
 
         private void HandleStaticFlags(GameObject obj, StaticEditorFlags initial_flags)
         {
-            if (_userPropertyMap.TryGetValue(obj.name, out AngryExportSystemXml options) &&
+            if (_importConfig.Lookup.TryGetValue(obj.name, out ExportObject options) &&
                 options?.StaticFlags?.Flags != null)
             {
-                initial_flags = default(StaticEditorFlags);
+                initial_flags = default;
                 foreach (var flagString in options.StaticFlags.Flags)
                 {
                     if (Enum.TryParse(flagString, out StaticEditorFlags flag))

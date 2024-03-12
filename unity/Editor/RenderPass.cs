@@ -7,7 +7,7 @@ namespace AngryLabs.AngryExportSystem
 {
     class RenderPass : IFbxImportPass
     {
-        public bool ImportPass(ProcessFbxImport importer, GameObject go, AngryExportSystemXml options)
+        public bool ImportPass(ProcessFbxImport importer, GameObject go, ExportObject options)
         {
             var value = options?.Render;
             if (value == null) return true;

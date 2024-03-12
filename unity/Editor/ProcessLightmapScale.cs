@@ -6,7 +6,7 @@ namespace AngryLabs.AngryExportSystem
 {
     class ProcessLightmapScale : IFbxImportPass
     {
-        public bool ImportPass(ProcessFbxImport importer, GameObject go, AngryExportSystemXml options)
+        public bool ImportPass(ProcessFbxImport importer, GameObject go, ExportObject options)
         {
             var light = options?.LightmapScale;
             if (light == null) return true;

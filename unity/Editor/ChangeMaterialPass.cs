@@ -53,7 +53,7 @@ namespace AngryLabs.AngryExportSystem
         public Dictionary<string, string> MaterialDic { get; private set; }
 
 
-        public bool ImportPass(ProcessFbxImport importer, GameObject target, AngryExportSystemXml options)
+        public bool ImportPass(ProcessFbxImport importer, GameObject target, ExportObject options)
         {
             Renderer rend;
             if (!target.TryGetComponent<Renderer>(out rend))
