@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 
-using Assets.AngryLabs.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
