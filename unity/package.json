@@ -1,17 +1,16 @@
 {
 	"name" : "net.angrylabs.angryexportsystem",
-	"displayName" : "Angry Export System",
 	"version" : "0.0.1",
-	"//unity" : "2019.4",
+	"displayName" : "Angry Export System",
+	"unity" : "2019.4",
 	"description" : "A Blender to Unity integration to enable better world building",
 	"vrchatVersion" : "2022.1.1",
 	"author" : {
 		"name" : "VRChat",
-		"email" : "developer@vrchat.com",
-		"url" : "https://github.com/angriestscv/AngryExportSystem"
+		"email" : "developer@vrchat.com"
 	},
 	"url" : "https://github.com/angriestscv/AngryExportSystem/unity/package.json",
-	"//dependencies" : {
+	"dependencies" : {
 		"com.unity.nuget.newtonsoft-json" : "2.0.2"
 	}
 }
