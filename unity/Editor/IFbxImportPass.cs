@@ -6,7 +6,7 @@ namespace AngryLabs.AngryExportSystem
 {
     public interface IFbxImportPass
     {
-        bool ImportPass(ProcessFbxImport importer, GameObject go, AngryExportSystemXml options);
+        bool ImportPass(ProcessFbxImport importer, GameObject go, ExportObject options);
     }
 }
 #endif

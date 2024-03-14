@@ -1,21 +1,17 @@
 {
-	"id": "net.angrylabs.angryexportsystem",
-	"name": "net.angrylabs.angryexportsystem",
-	"url": "https://github.com/fasdfaf.zip",
-
-	"packages": {
-		"versions":{
-			"name": "net.angrylabs.angryexportsystem",
-			"displayName": "Angry Export System",
-			"version": "0.0.0",
-			"description": "blender and unity world building integration",
-			"author":{
-				"name": "angrylabs",
-				"email": "angriestscv@proton.me"
-			},
-			"hideInEditor": false,
-			"url": "https://github.com/fasdfaf.zip",
-			"license": "GPL-3.0-or-later"
-		}
+	"name" : "net.angrylabs.angryexportsystem",
+	"displayName" : "Angry Export System",
+	"version" : "0.0.1",
+	"//unity" : "2019.4",
+	"description" : "A Blender to Unity integration to enable better world building",
+	"vrchatVersion" : "2022.1.1",
+	"author" : {
+		"name" : "VRChat",
+		"email" : "developer@vrchat.com",
+		"url" : "https://github.com/angriestscv/AngryExportSystem"
+	},
+	"url" : "https://github.com/angriestscv/AngryExportSystem/unity/package.json",
+	"//dependencies" : {
+		"com.unity.nuget.newtonsoft-json" : "2.0.2"
 	}
 }

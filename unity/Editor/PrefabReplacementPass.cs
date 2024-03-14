@@ -8,7 +8,7 @@ namespace AngryLabs.AngryExportSystem
 {
     class PrefabReplacementPass : IFbxImportPass
     {
-        public bool ImportPass(ProcessFbxImport importer, GameObject go, AngryExportSystemXml options)
+        public bool ImportPass(ProcessFbxImport importer, GameObject go, ExportObject options)
         {
             var pre = options?.PrefabLink;
             if (pre == null) return true;
