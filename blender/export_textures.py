@@ -34,8 +34,13 @@ def extract_material_images(material: bpy.types.Material):
     return images
 
 # Function to save images to a directory
-def save_images(path, images):
+def save_images(path, images: set[bpy.types.Image]):
     #print("To save images", images)
     for image in images:
-        image.save_render(os.path.join(path, image.name))
+        image_copy = image.copy()
+        fname = image.name
+        if not fname.endswith(".png"):
+            fname += ".png"
+        image_copy.file_format = 'PNG'
+        image_copy.save_render(os.path.join(path, fname))
 
