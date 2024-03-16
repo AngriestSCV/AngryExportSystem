@@ -19,10 +19,6 @@ namespace AngryLabs.AngryExportSystem
         static XmlSerializer _exportSeralizer = new XmlSerializer(typeof(AngryExportSystemList));
         private AngryExportSystemList _importConfig;
 
-        private void OnPostprocessGameObjectWithUserProperties(GameObject go, string[] propNames, object[] values)
-        {
-        }
-
         private bool TryLoadXml(string assetPath, out AngryExportSystemList cfg)
         {
             try
@@ -48,7 +44,6 @@ namespace AngryLabs.AngryExportSystem
                 return false;
             }
         }
-
 
         public void OnPreprocessModel()
         {
@@ -93,7 +88,6 @@ namespace AngryLabs.AngryExportSystem
                 RecursiveVisit(child, passes);
             }
         }
-
 
         private void OnPostprocessModel(GameObject model)
         {
@@ -143,6 +137,5 @@ namespace AngryLabs.AngryExportSystem
             }
         }
     }
-
 }
 #endif
