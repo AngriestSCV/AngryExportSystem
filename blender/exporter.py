@@ -1,9 +1,15 @@
+from importlib import reload
+
+
+if "export_textures" in locals(): reload(export_textures)
+
 import bpy, os
 import re
 import xml.etree.ElementTree as XmlEt
 
 from . import config_loader
 from . import export_prop
+from . import export_textures
 
 def export_options(self, context):
     cfg = config_loader.get_default(context.scene)
@@ -67,6 +73,9 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
             to_save = self._get_selected(context)
             #print(f"Found {len(to_save)} items to work with")
             self._create_xml(xml_path, cfg, to_save)
+
+            texture_path = os.path.join(output_dir, "textures")
+            export_textures.export_textures_for_objects(texture_path, cfg, to_save)
 
             print("Saving FBX at", save_path)
             bpy.ops.export_scene.fbx(
