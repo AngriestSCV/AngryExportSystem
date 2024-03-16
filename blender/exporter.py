@@ -6,6 +6,7 @@ if "export_textures" in locals(): reload(export_textures)
 import bpy, os
 import re
 import xml.etree.ElementTree as XmlEt
+import time
 
 from . import config_loader
 from . import export_prop
@@ -49,6 +50,7 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
         
     def execute(self, context: bpy.types.Context):
         selected = self._get_selected(context)
+        start_time = time.time()
         try:
             bpy.ops.object.select_all(action='DESELECT')
             col = context.collection
@@ -83,6 +85,8 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
                 use_active_collection=True,
                 apply_scale_options='FBX_SCALE_UNITS',
                 use_mesh_modifiers=True)
+            end_time = time.time()
+            print(f"Total Angry Export time for collection {col}", end_time - start_time )
 
         except Exception as e:
             print(e)
