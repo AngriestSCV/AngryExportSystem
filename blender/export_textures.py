@@ -25,6 +25,8 @@ def export_textures_for_objects(texture_path: str, cfg, to_save: list[bpy.types.
 # Function to extract images used in a material
 def extract_material_images(material: bpy.types.Material):
     images = set()
+    if material is None:
+        return images
     if material.node_tree:
         for node in material.node_tree.nodes:
             if node.type == 'TEX_IMAGE':

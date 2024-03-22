@@ -82,6 +82,7 @@ class COLLECTION_OT_Angry_Exporter(bpy.types.Operator):
                 filepath = save_path,
                 use_active_collection=True,
                 apply_scale_options='FBX_SCALE_UNITS',
+                object_types={'EMPTY', 'CAMERA', 'LIGHT', 'ARMATURE', 'MESH', 'OTHER'},
                 use_mesh_modifiers=True)
 
         except Exception as e:
