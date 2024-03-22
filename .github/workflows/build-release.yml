@@ -26,8 +26,8 @@ jobs:
       - name: Create versioned build with filtered zip file.
         run: |
           cd ${{ github.event.repository.name }}
-          gh release upload ${{github.ref_name}} <files>... \
+          gh release upload ${{github.ref_name}} \
             ${{ github.event.repository.name }}.${{ github.event.release.tag_name }}.zip \
-            --generate-notes \
+            --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
