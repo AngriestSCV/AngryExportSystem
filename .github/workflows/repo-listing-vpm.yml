@@ -7,9 +7,9 @@ on:
 jobs:
 
   # Validate Repository Configuration
-  environment: Release
   config:
     runs-on: ubuntu-latest
+    environment: Release
     outputs:
       config_package: ${{ steps.config_package.outputs.configPackage }}
     steps:
@@ -29,6 +29,7 @@ jobs:
   build:
     needs: config
     runs-on: ubuntu-latest
+    environment: Release
     permissions:
       contents: write
     env:
