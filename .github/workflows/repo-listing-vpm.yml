@@ -49,7 +49,7 @@ jobs:
       # Update the version to match the one we are deploying
       - name: Set Version in json
         run: |
-          python .github/workflows/set-package-version.py "${{ github.event.release.tag_name }}" "${{ env.packagePath }}"
+          python .github/workflows/set-package-version.py "${{ github.event.release.tag_name }}" "${{ env.packagePath }}/package.json"
 
       # Get the Package version based on the package.json file
       - name: Get Version
