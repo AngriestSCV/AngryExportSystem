@@ -86,8 +86,8 @@ jobs:
       - name: Update the release with the unity files
         run: |
           gh release upload ${{github.ref_name}} \
-            ${{ env.unityPackage }} \
-            ${{ env.zipFile }}
+            "${{ env.unityPackage }}" \
+            "${{ env.zipFile }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
