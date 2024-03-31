@@ -1,0 +1,16 @@
+{
+    "author": {
+        "email": "angriestscv@proton.me",
+        "name": "AngriestSCV"
+    },
+    "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "2.0.2"
+    },
+    "description": "A Blender to Unity integration to enable better world building",
+    "displayName": "Angry Export System",
+    "name": "net.angrylabs.angryexportsystem",
+    "unity": "2019.4",
+    "url": "https://github.com/angriestscv/AngryExportSystem/unity/package.json",
+    "version": "v0.0.20",
+    "vrchatVersion": "2022.1.1"
+}
