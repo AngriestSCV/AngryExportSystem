@@ -19,16 +19,10 @@ namespace AngryLabs.AngryExportSystem
         {
             get
             {
-                try{
-
                 _lookup ??= (Objects?.Length ?? 0) == 0 ?
                     new Dictionary<string, ExportObject>() :
                     Objects.ToDictionary(x => x?.BlenderName?.Value ?? string.Empty);
                 return _lookup;
-                }
-                catch{
-                    throw;
-                }
             }
         }
 
