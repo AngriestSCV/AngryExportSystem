@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Xml.Serialization;
 using UnityEditor;
 
@@ -18,9 +19,16 @@ namespace AngryLabs.AngryExportSystem
         {
             get
             {
-                if (_lookup == null)
-                    _lookup = Objects.ToDictionary(x => x?.BlenderName?.Value);
+                try{
+
+                _lookup ??= (Objects?.Length ?? 0) == 0 ?
+                    new Dictionary<string, ExportObject>() :
+                    Objects.ToDictionary(x => x?.BlenderName?.Value ?? string.Empty);
                 return _lookup;
+                }
+                catch{
+                    throw;
+                }
             }
         }
 
