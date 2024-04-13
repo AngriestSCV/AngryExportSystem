@@ -2,6 +2,7 @@
 import os, sys
 import bpy
 import time
+import shutil
 
 
 def export_textures_for_objects(texture_path: str, cfg, to_save: list[bpy.types.Object]):
@@ -47,7 +48,31 @@ def extract_material_images(material: bpy.types.Material):
 
 # Function to save images to a directory
 def save_images(path, images):
-    #print("To save images", images)
+
     for image in images:
-        image.save_render(os.path.join(path, image.name))
+        save_one_image(image, path)
+
+def save_one_image(image: bpy.types.Image, path: str):
+    new_path = os.path.join(path, image.name)
+
+    if not try_copy_image(image, new_path):
+        print("Failed to cpy image from", image.name)
+        if not new_path.endswith(new_path):
+            new_path += ".png"
+        image.save(filepath=new_path)
+
+
+def try_copy_image(image: bpy.types.Image, new_path:str):
+    old_path = bpy.path.abspath(image.filepath)
+
+    if not os.path.exists(old_path):
+        return False
+
+    try:
+        print("Copying from", old_path, "to", new_path)
+        shutil.copyfile(old_path, new_path)
+        return True
+    except Exception as e:
+        print("Exception copying image", old_path, e)
+        return False
 
