@@ -32,7 +32,7 @@ def export_collection(context: bpy.types.Context, col: bpy.types.Collection, exp
     
     os.makedirs(output_dir, exist_ok=True)
 
-    for obj in col.objects:
+    for obj in col.all_objects:
         obj.select_set(True)
 
     to_save = _get_selected(context)
